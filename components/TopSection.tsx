@@ -35,8 +35,8 @@ export default function TopSection() {
         ) : (
           <Swiper
             loop={false}
-            slidesPerView={4} // Можно уменьшить, чтобы лучше подходило для различных экранов
-            spaceBetween={10} // Устанавливаем расстояние между слайдами
+            slidesPerView={4}
+            spaceBetween={10}
             breakpoints={{
               320: { slidesPerView: 1 },
               480: { slidesPerView: 2 },
