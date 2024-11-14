@@ -6,34 +6,42 @@ import Telegram from "@/public/Telegram";
 import Tiktok from "@/public/Tiktok";
 import Watsup from "@/public/Watsup";
 
-export default function SocialHeader() {
+const sosialIcons = [
+  {
+    url: "#",
+    icon: <Insta />,
+  },
+  {
+    url: "#",
+    icon: <Face />,
+  },
+  {
+    url: "#",
+    icon: <Tiktok />,
+  },
+  {
+    url: "#",
+    icon: <Watsup />,
+  },
+  {
+    url: "#",
+    icon: <Telegram />,
+  },
+];
+
+export default function SocialHeader({ size }: any) {
   return (
     <ul className="flex mb-1  justify-center mr-7 ">
-      <li className="w-6 h-6 hover:scale-125 transition-all duration-300">
-        <Link href="#">
-          <Insta />
-        </Link>
-      </li>
-      <li className="w-6 h-6 hover:scale-125 transition-all duration-300">
-        <Link href="#">
-          <Face />
-        </Link>
-      </li>
-      <li className="w-6 h-6 hover:scale-125 transition-all duration-300">
-        <Link href="#">
-          <Tiktok />
-        </Link>
-      </li>
-      <li className="w-6 h-6 hover:scale-125 transition-all duration-300">
-        <Link href="#">
-          <Watsup />
-        </Link>
-      </li>
-      <li className="w-6 h-6 hover:scale-125 transition-all duration-300">
-        <Link href="#">
-          <Telegram />
-        </Link>
-      </li>
+      {sosialIcons.map((item: any, i: number) => {
+        return (
+          <li
+            key={i}
+            className={`w-${size} h-${size}  hover:scale-125 transition-all duration-300`}
+          >
+            <Link href={item.url}>{item.icon}</Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }

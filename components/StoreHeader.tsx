@@ -88,7 +88,7 @@ export default function Component() {
             <NavItems />
           </ul>
         </nav>
-        <SocialHeader />
+        <SocialHeader size={6} />
       </div>
     </header>
   );
