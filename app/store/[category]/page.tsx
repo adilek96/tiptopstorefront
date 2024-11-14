@@ -5,7 +5,7 @@ import ProductList from "@/components/ProductList";
 export default async function Page({ params }: { params: any }) {
   const category = await params;
 
-  const data = await getProducts(category);
+  const data = await getProducts(category.category);
 
   return (
     <section className="relative w-[96%] flex items-center justify-center mt-8 flex-col">
