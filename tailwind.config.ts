@@ -12,6 +12,14 @@ const config: Config = {
 		boxShadow: {
 			'top': '0 -25px 50px -12px rgba(0, 0, 0, 0.25)',
 		  },
+		fontSize: {
+			calcsm: "calc(10px + 4 * ((100vw - 320px) / (1280 - 320)))",
+			calcmd: "calc(12px + 4 * ((100vw - 320px) / (1280 - 320)))",
+			calclg: "calc(14px + 4 * ((100vw - 320px) / (1280 - 320)))",
+			calcxl: "calc(16px + 4 * ((100vw - 320px) / (1280 - 320)))",
+			calc2xl: "calc(18px + 4 * ((100vw - 320px) / (1280 - 320)))",
+			calc3xl: "calc(20px + 4 * ((100vw - 320px) / (1280 - 320)))",
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

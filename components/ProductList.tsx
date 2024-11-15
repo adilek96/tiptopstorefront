@@ -11,7 +11,7 @@ export default function ProductList({ data }: { data: any }) {
   }
 
   return (
-    <div className="w-[95%] bg-gray-200 py-10 px-10 mt-5 mb-10 flex flex-wrap justify-center gap-10">
+    <div className="w-[100%] shadow-2xl py-5 px-2 mt-5 mb-10 flex flex-wrap justify-center gap-10">
       {data.map((item: any) =>
         item.variants.map((variant: any, i: number) => (
           <ProductCard

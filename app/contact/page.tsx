@@ -4,18 +4,23 @@ import SocialHeader from "@/components/SocialHeader";
 
 export default function Contact() {
   return (
-    <section className="w-full   flex  justify-center items-center flex-col">
-      <div className="w-[95vw] my-10 h-[90vh] bg-gray-200 flex justify-center items-center relative">
-        <div className="w-[40%] h-full flex justify-center items-center">
+    <section className="w-full    flex  justify-center items-center flex-col cursor-default">
+      <div className="w-[95vw] py-24 my-10  shadow-2xl flex flex-col md:flex-row justify-center items-center relative ">
+        <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
+          <span className="py-1">О нас</span>
+        </div>
+        <div className="w-[80%] md:w-[40%] h-full flex justify-center items-center">
           <Image src={"/logotip.svg"} alt="Logo" width={300} height={300} />
         </div>
-        <div className="h-[70%] w-1 bg-slate-300/50"></div>
-        <div className="w-[60%] h-full flex justify-center items-center flex-col">
-          <p className="w-[80%] text-lg">
+
+        <div className="w-[90%] md:w-[60%] h-full flex justify-center items-center flex-col">
+          <p className="w-[100%] md:w-[80%] text-calclg">
             Добро пожаловать в наш магазин, где каждый подарок превращается в
             настоящий источник радости! Мы предлагаем уникальные сувениры,
             оригинальные настольные игры, стильные декорации и волшебные
             гирлянды, которые придадут вашему дому уют и праздничное настроение.
+          </p>
+          <p className="w-[100%] md:w-[80%] text-calclg">
             Наши товары — это не просто вещи, а настоящие моменты для вас и
             ваших близких. В нашем ассортименте вы найдете идеальные подарки для
             любого случая, которые станут яркими акцентами в вашем интерьере и
@@ -23,23 +28,22 @@ export default function Contact() {
             стоит того, чтобы его сделать незабываемым, и готовы помочь вам в
             этом.
           </p>
-          <p className="w-[80%] mt-5 text-lg font-bold">
-            <span>Связь с нами:</span> +994 55 302 32 62
+
+          <p className="w-[80%] mt-5 text-calcxl font-bold">
+            <span>Связь с нами:</span>
+            <span className="text-nowrap"> +994 55 302 32 62</span>
           </p>
           <div className="mt-5">
             <SocialHeader size={6} />
           </div>
         </div>
-        <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
-          <span className="py-1">О нас</span>
-        </div>
       </div>
-      <div className="w-[95vw] h-[90vh] my-10 bg-gray-200 flex justify-center items-center relative">
+      <div className="w-[95vw] py-24 my-10 shadow-2xl flex justify-center items-center relative">
         <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
           <span className="py-1">Политика возрата</span>
         </div>
-        <div className="w-[60%] h-full flex justify-center items-center flex-col">
-          <p className="w-[80%] text-lg">
+        <div className="w-[90%] md:w-[60%] h-full flex justify-center items-center flex-col">
+          <p className="w-[100%] md:w-[80%] text-calclg">
             Наша политика возврата направлена на то, чтобы каждая ваша покупка
             была комфортной и беззаботной. Если товар не оправдал ожиданий, вы
             можете вернуть его в течение 14 дней с момента получения, при
@@ -52,16 +56,16 @@ export default function Contact() {
           </p>
         </div>
       </div>
-      <div className="w-[95vw] h-[90vh] my-10 bg-gray-200 flex justify-center items-center relative">
+      <div className="w-[95vw] py-24  my-10 shadow-2xl flex justify-center items-center relative">
         <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
           <span className="py-1">Доставка</span>
         </div>
-        <div className="w-[60%] h-full flex justify-center items-center flex-col">
-          <h3 className="text-2xl font-bold">
+        <div className="w-[90%] md:w-[60%]  flex justify-center items-center flex-col">
+          <h3 className="text-calclg font-bold">
             Мы предлагаем три удобных способа доставки, чтобы вы могли получить
             ваш заказ максимально комфортно и в нужное время:
           </h3>
-          <p className="w-[80%] text-lg mt-3">
+          <p className="w-[80%] text-calcmd mt-3">
             <span className="font-bold">
               Бесплатная доставка до станции метро
             </span>
@@ -73,7 +77,7 @@ export default function Contact() {
             </i>
           </p>
 
-          <p className="w-[80%] text-lg mt-3">
+          <p className="w-[80%] text-calcmd mt-3">
             <span className="font-bold">
               Доставка до двери в черте города Баку
             </span>
@@ -86,7 +90,7 @@ export default function Contact() {
             </i>
           </p>
 
-          <p className="w-[80%] text-lg mt-3">
+          <p className="w-[80%] text-calcmd mt-3">
             <span className="font-bold">Доставка по Азербайджану</span>—
             <i>
               если вы находитесь за пределами Баку, мы отправим ваш заказ почтой
@@ -96,7 +100,7 @@ export default function Contact() {
               сроки.
             </i>
           </p>
-          <p className="w-[80%] text-lg">
+          <p className=" mt-2 text-calclg">
             После оформления заказа наш оператор свяжется с вами по указанному
             номеру телефона, чтобы подтвердить покупку и уточнить адрес
             доставки. Мы стремимся сделать процесс доставки удобным и приятным

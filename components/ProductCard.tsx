@@ -16,7 +16,7 @@ export default function ProductCard({
 
   return (
     <Card
-      className="w-[360px] max-w-sm] bg-opacity-20 backdrop-filter backdrop-blur-lg  shadow-md  overflow-hidden"
+      className="w-[360px] max-w-sm bg-opacity-20 backdrop-filter backdrop-blur-lg  shadow-xl  overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -31,7 +31,7 @@ export default function ProductCard({
             transition={{ duration: 0.3 }}
           />
         </div>
-        <h3 className="text-2xl font-bold mb-2 h-16 text-gray-700">
+        <h3 className="text-calc3xl font-bold mb-2 h-16 text-gray-700">
           {data.title}
         </h3>
         <p className="text-sm text-gray-600 mb-4">{data.subtitle}</p>
