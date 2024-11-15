@@ -21,7 +21,7 @@ export default function Footer() {
           {/* Navigation */}
           <nav className="flex  flex-col justify-center items-center md:items-start space-y-4">
             <Link
-              href="/contact"
+              href="/contact#about-us"
               className="hover:text-amber-600 transition-colors"
             >
               Контакты
@@ -32,10 +32,7 @@ export default function Footer() {
             >
               Магазин
             </Link>
-            <Link
-              href="/services"
-              className="hover:text-amber-600 transition-colors"
-            >
+            <Link href="/" className="hover:text-amber-600 transition-colors">
               Новинки
             </Link>
           </nav>
@@ -43,19 +40,19 @@ export default function Footer() {
           {/* Additional Links */}
           <nav className="flex  flex-col justify-center items-center md:items-start space-y-4">
             <Link
-              href="/contact"
+              href="/profile"
               className="hover:text-amber-600 transition-colors"
             >
               Личный кабинет
             </Link>
             <Link
-              href="/privacy"
+              href="/contact#delivery"
               className="hover:text-amber-600 transition-colors"
             >
               Доставка
             </Link>
             <Link
-              href="/terms"
+              href="/contact#refound-policy"
               className="hover:text-amber-600 transition-colors"
             >
               Политика возрата

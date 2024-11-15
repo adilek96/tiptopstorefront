@@ -15,7 +15,7 @@ export default function CategorySelector({ data }) {
 
   return (
     <Select onValueChange={(e) => router.push(e)}>
-      <SelectTrigger className="w-[180px] bg-white shadow-lg">
+      <SelectTrigger className="w-[180px] bg-white shadow-lg z-10">
         <SelectValue placeholder="Категория" />
       </SelectTrigger>
       <SelectContent>

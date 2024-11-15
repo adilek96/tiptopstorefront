@@ -17,7 +17,7 @@ export default async function StoreLayout({
 
   return (
     <div className="flex justify-center flex-col items-center">
-      <section className="w-[90%] mx-auto mt-10  py-3 px-2   flex gap-2 items-center justify-around   ">
+      <section className="w-[90%] mx-auto mt-10  py-3 px-2   flex gap-2 items-center justify-around shadow-lg  ">
         <CategorySelector data={data} />
         <SortingSelector />
       </section>

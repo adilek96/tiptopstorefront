@@ -19,7 +19,7 @@ export default function SortingSelector() {
         router.refresh();
       }}
     >
-      <SelectTrigger className="w-[180px] bg-white shadow-lg">
+      <SelectTrigger className="w-[180px] bg-white shadow-lg z-10">
         <SelectValue placeholder="Сортировка" />
       </SelectTrigger>
       <SelectContent>

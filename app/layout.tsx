@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
 import StoreHeader from "@/components/StoreHeader";
 import Footer from "@/components/Footer";
+import SnowfallEffect from "../components/SnowfallEffect";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,9 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` antialiased overflow-x-hidden`}>
+      <body
+        className={` antialiased overflow-x-hidden ${montserrat.className}`}
+      >
         <StoreHeader />
-        <main>{children}</main>
+
+        <main className="relative">
+          <SnowfallEffect />
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

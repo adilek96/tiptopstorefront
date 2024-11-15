@@ -5,7 +5,10 @@ import SocialHeader from "@/components/SocialHeader";
 export default function Contact() {
   return (
     <section className="w-full    flex  justify-center items-center flex-col cursor-default">
-      <div className="w-[95vw] py-24 my-10  shadow-2xl flex flex-col md:flex-row justify-center items-center relative ">
+      <div
+        className="w-[95vw] bg-white py-24 my-10  shadow-2xl flex flex-col md:flex-row justify-center items-center relative z-10"
+        id="about-us"
+      >
         <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
           <span className="py-1">О нас</span>
         </div>
@@ -38,7 +41,10 @@ export default function Contact() {
           </div>
         </div>
       </div>
-      <div className="w-[95vw] py-24 my-10 shadow-2xl flex justify-center items-center relative">
+      <div
+        className="w-[95vw] bg-white py-24 my-10 shadow-2xl flex justify-center items-center relative z-10"
+        id="refound-policy"
+      >
         <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
           <span className="py-1">Политика возрата</span>
         </div>
@@ -56,7 +62,10 @@ export default function Contact() {
           </p>
         </div>
       </div>
-      <div className="w-[95vw] py-24  my-10 shadow-2xl flex justify-center items-center relative">
+      <div
+        className="w-[95vw] py-24  my-10 shadow-2xl flex justify-center bg-white items-center relative z-10"
+        id="delivery"
+      >
         <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
           <span className="py-1">Доставка</span>
         </div>
