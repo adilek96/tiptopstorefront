@@ -53,7 +53,7 @@ export default function Component() {
               </Link>
             </div>
             <nav className="mt-6 flex justify-center">
-              <ul className=" ribbon-nav">
+              <ul className="ribbon-nav ">
                 {navItems.map((item) => {
                   return (
                     <li key={item.href}>
@@ -99,7 +99,7 @@ export default function Component() {
               return (
                 <li
                   key={item.href}
-                  className={`hover:scale-125 transition-all duration-300 ribbon-menu ${item.color}`}
+                  className={`hover:scale-110 transition-all duration-300 ribbon-menu z-10 ${item.color}`}
                 >
                   <Link
                     href={item.href}

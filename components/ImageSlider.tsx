@@ -18,6 +18,9 @@ export default function ImageSlider({
           src={mainImage}
           alt="Product image"
           fill
+          loading="lazy"
+          placeholder="empty"
+          sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
           className="rounded-lg object-cover"
         />
       </div>
@@ -33,6 +36,9 @@ export default function ImageSlider({
                 src={img.url}
                 alt={`Product image thumbnail ${index + 1}`}
                 fill
+                loading="lazy"
+                placeholder="empty"
+                sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
               />
             </button>

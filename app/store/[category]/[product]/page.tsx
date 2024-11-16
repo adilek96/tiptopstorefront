@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: any }) {
             {product.tags.map((tag: any, index: number) => (
               <div
                 key={index}
-                className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center  font-semibold text-gray-600 hover:text-amber-600 hover:scale-5 transition-all duration-300  `}
+                className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center text-calcsm  font-semibold text-gray-600 hover:text-amber-600 hover:scale-5 transition-all duration-300  `}
               >
                 <p>{tag.value}</p>
               </div>
@@ -64,7 +64,7 @@ export default async function Page({ params }: { params: any }) {
           </div>
           <div className="w-full">
             <p className="text-3xl font-bold text-nowrap text-green-900 mb-5">
-              Цена {product.variants[0].calculated_price.calculated_amount}{" "}
+              Цена {product.variants[0].calculated_price.calculated_amount}
               &#8380;
             </p>
 
@@ -90,17 +90,17 @@ export default async function Page({ params }: { params: any }) {
 
           <p className="text-gray-600 mt-10">{product.description}</p>
         </div>
-        <div className="mt-8 mx-auto bg-gray-200 md:w-[60%] w-[90%] shadow-xl rounded-md z-10  px-10 box">
+        <div className="mt-8 mx-auto bg-gray-200 md:w-[60%] w-[100%] shadow-xl rounded-md z-10  px-10 box">
           <div className="w-full flex justify-center items-center">
             <div className="ribbon-delivery flex justify-center text-calcxl  z-50">
-              <p className="my-5 px-2 text-center text-calclg  ">
+              <p className="my-5 px-2 py-4 text-center text-calclg  ">
                 Характиристика упаковки
               </p>
             </div>
           </div>
           <div className="container mx-auto p-4">
             {product.weight === null ? (
-              <div className="h-32  font-semibold text-calcxl">
+              <div className="py-32 flex justify-center items-center  font-semibold text-calcxl">
                 <p className="text-center">
                   Ууупс. Похоже мы забыли указать характиристики товара.
                 </p>

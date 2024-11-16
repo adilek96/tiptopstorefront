@@ -280,88 +280,6 @@
   ); /* from https://css-generators.com/starburst-shape/ */
 }
 
-/* mobile nav menu ribbons */
-
-/* HTML: <div class="ribbon">Your text content</div> */
-.ribbon-nav {
-  font-size: 28px;
-  font-weight: bold;
-  color: #fff;
-}
-.ribbon-nav {
-  --r: 0.5em; /* control the cutout of the ribbon */
-  --a: 20deg; /* control the angle of the folded part */
-  --s: 6em; /* control the width of the folded part  */
-  --c: #2699dc;
-
-  padding-inline: calc(1lh * tan(var(--a) / 2) + 0.3em);
-  margin-block: calc(var(--s) * sin(var(--a)) - 0.15lh);
-  text-align: center;
-  line-height: 2;
-  background-image: linear-gradient(var(--c) 70%, #0000 0),
-    linear-gradient(
-      to bottom left,
-      #0000 50%,
-      color-mix(in srgb, var(--c), #000 40%) 51% 84%,
-      #0000 85%
-    );
-  background-position: 0 0.15lh;
-  background-size: 100% 1lh;
-  position: relative;
-  clip-path: polygon(
-    0 0.15lh,
-    calc(100% - 0.7lh / sin (var(--a))) 0.15lh,
-    calc(100% - 0.7lh / sin (var(--a)) - 999px)
-      calc(0.15lh - 999px * tan(var(--a))),
-    100% -999px,
-    100% 0.15lh,
-    calc(100% - 0.7lh * tan(var(--a) / 2)) 0.85lh,
-    100% 1lh,
-    100% calc(100% - 0.15lh),
-    calc(0.7lh / sin (var(--a))) calc(100% - 0.15lh),
-    calc(0.7lh / sin (var(--a)) + 999px)
-      calc(100% - 0.15lh + 999px * tan(var(--a))),
-    0 999px,
-    0 calc(100% - 0.15lh),
-    calc(0.7lh * tan(var(--a) / 2)) calc(100% - 0.85lh),
-    0 calc(100% - 1lh)
-  );
-  width: fit-content;
-}
-.ribbon-nav:before,
-.ribbon-nav:after {
-  content: "";
-  position: absolute;
-  height: 0.7lh;
-  width: var(--s);
-  background: color-mix(in srgb, var(--c), #000 40%);
-  rotate: var(--a);
-}
-.ribbon-nav:before {
-  top: 0.15lh;
-  right: 0;
-  transform-origin: top right;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    calc(100% - 0.7lh / tan (var(--a))) 100%,
-    0 100%,
-    var(--r) 50%
-  );
-}
-.ribbon-nav:after {
-  bottom: 0.15lh;
-  left: 0;
-  transform-origin: bottom left;
-  clip-path: polygon(
-    calc(0.7lh / tan (var(--a))) 0,
-    100% 0,
-    calc(100% - var(--r)) 50%,
-    100% 100%,
-    0 100%
-  );
-}
-
 /* border */
 
 .block-border {
@@ -448,5 +366,41 @@
   );
   background: radial-gradient(50% 0.2em at top, #000a, #0000) border-box,
     #2699dc padding-box; /* the color  */
+  width: fit-content;
+}
+
+/* mobile nav menu ribbons */
+
+.ribbon-nav {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+}
+.ribbon-nav {
+  --r: 0.5em; /* control the cutout of the ribbon */
+  --c: #2699dc;
+
+  padding-inline: calc(0.2em + var(--r));
+  text-align: center;
+  line-height: 2;
+  background-image: linear-gradient(var(--c) 70%, #0000 0),
+    linear-gradient(
+      to bottom right,
+      #0000 50%,
+      color-mix(in srgb, var(--c), #000 40%) 51% 84%,
+      #0000 85%
+    );
+  background-position: 0 0.15lh;
+  background-size: 100% 1lh;
+  clip-path: polygon(
+    100% 0.15lh,
+    0 0.15lh,
+    var(--r) 0.5lh,
+    0 0.85lh,
+    0 calc(100% - 0.15lh),
+    100% calc(100% - 0.15lh),
+    calc(100% - var(--r)) calc(100% - 0.5lh),
+    100% calc(100% - 0.85lh)
+  );
   width: fit-content;
 }

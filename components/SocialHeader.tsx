@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 import Insta from "@/public/Insta";
 import Face from "@/public/Face";
-import Telegram from "@/public/Telegram";
 import Tiktok from "@/public/Tiktok";
 import Watsup from "@/public/Watsup";
 
@@ -22,10 +21,6 @@ const sosialIcons = [
   {
     url: "#",
     icon: <Watsup />,
-  },
-  {
-    url: "#",
-    icon: <Telegram />,
   },
 ];
 

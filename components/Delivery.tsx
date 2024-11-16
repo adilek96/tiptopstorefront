@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function Delivery() {
   return (
-    <section className="relative mt-10 mb-8 w-[80%] flex items-center justify-center bg-gray-100  flex-col  box z-10">
+    <section className="relative mt-10 mb-8 w-[90%] flex items-center justify-center bg-gray-100  flex-col  box z-10">
       <div className="w-full flex justify-center items-center">
         <div className="ribbon-delivery flex justify-center text-calc2xl  z-50">
-          <span className="py-4 px-2">Доставка</span>
+          <span className="py-6 px-2">Доставка</span>
         </div>
       </div>
 
