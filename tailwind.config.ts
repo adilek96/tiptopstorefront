@@ -20,6 +20,9 @@ const config: Config = {
 			calc2xl: "calc(18px + 4 * ((100vw - 320px) / (1280 - 320)))",
 			calc3xl: "calc(20px + 4 * ((100vw - 320px) / (1280 - 320)))",
 		},
+		screens: {
+			mdx: "895px",
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

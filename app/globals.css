@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --blockground: 177, 174, 255;
+  --d: 2500ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,8 +12,6 @@
     --blockground: 177, 174, 255;
   }
 }
-
-
 
 @keyframes pulse-glow {
   0%,
@@ -128,28 +126,6 @@
 
 /* ribon for menu  */
 
-/* HTML: <div class="ribbon">Your text content</div> */
-/* .ribbon-menu {
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-
-  padding-right: 10px;
-} */
-/* .ribbon-menu {
-  --r: 1.8em; 
-  
-  border-block: .5em solid #0000;
-  padding-inline: calc(var(--r) + .25em) .5em;
-  line-height: 1.8;
-  clip-path: polygon(0 0,100% 0,100% 100%,0 100%,var(--r) calc(100% - .25em),0 50%,var(--r) .25em);
-  background:
-   radial-gradient(.2em 50% at right,#000a,#0000) border-box,
-   #d97706 padding-box; 
-  width: fit-content;
-} */
-
-/* HTML: <div class="ribbon">Your text content</div> */
 .ribbon-menu {
   font-size: 16px;
   font-weight: bold;
@@ -176,8 +152,6 @@
     100% var(--f)
   );
 }
-
-/* text animation  */
 
 /* delevery */
 
@@ -306,7 +280,6 @@
   ); /* from https://css-generators.com/starburst-shape/ */
 }
 
-
 /* mobile nav menu ribbons */
 
 /* HTML: <div class="ribbon">Your text content</div> */
@@ -316,57 +289,164 @@
   color: #fff;
 }
 .ribbon-nav {
-  --r: .5em;  /* control the cutout of the ribbon */
+  --r: 0.5em; /* control the cutout of the ribbon */
   --a: 20deg; /* control the angle of the folded part */
-  --s: 6em;   /* control the width of the folded part  */
+  --s: 6em; /* control the width of the folded part  */
   --c: #2699dc;
-  
-  padding-inline: calc(1lh*tan(var(--a)/2) + .3em);
-  margin-block: calc(var(--s)*sin(var(--a)) - .15lh);
+
+  padding-inline: calc(1lh * tan(var(--a) / 2) + 0.3em);
+  margin-block: calc(var(--s) * sin(var(--a)) - 0.15lh);
   text-align: center;
   line-height: 2;
-  background-image: 
-    linear-gradient(var(--c) 70%,#0000 0), 
-    linear-gradient(to bottom left,#0000 50%, color-mix(in srgb,var(--c),#000 40%) 51% 84%,#0000 85%);
-  background-position: 0 .15lh;
+  background-image: linear-gradient(var(--c) 70%, #0000 0),
+    linear-gradient(
+      to bottom left,
+      #0000 50%,
+      color-mix(in srgb, var(--c), #000 40%) 51% 84%,
+      #0000 85%
+    );
+  background-position: 0 0.15lh;
   background-size: 100% 1lh;
   position: relative;
   clip-path: polygon(
-    0 .15lh,
-    calc(100% - .7lh/sin(var(--a))) .15lh,
-    calc(100% - .7lh/sin(var(--a)) - 999px) calc(.15lh - 999px*tan(var(--a))),
+    0 0.15lh,
+    calc(100% - 0.7lh / sin (var(--a))) 0.15lh,
+    calc(100% - 0.7lh / sin (var(--a)) - 999px)
+      calc(0.15lh - 999px * tan(var(--a))),
     100% -999px,
-    100% .15lh,
-    calc(100% - .7lh*tan(var(--a)/2)) .85lh,
+    100% 0.15lh,
+    calc(100% - 0.7lh * tan(var(--a) / 2)) 0.85lh,
     100% 1lh,
-    100% calc(100% - .15lh),
-    calc(.7lh/sin(var(--a))) calc(100% - .15lh),
-    calc(.7lh/sin(var(--a)) + 999px) calc(100% - .15lh + 999px*tan(var(--a))),
+    100% calc(100% - 0.15lh),
+    calc(0.7lh / sin (var(--a))) calc(100% - 0.15lh),
+    calc(0.7lh / sin (var(--a)) + 999px)
+      calc(100% - 0.15lh + 999px * tan(var(--a))),
     0 999px,
-    0 calc(100% - .15lh),
-    calc(.7lh*tan(var(--a)/2)) calc(100% - .85lh),
+    0 calc(100% - 0.15lh),
+    calc(0.7lh * tan(var(--a) / 2)) calc(100% - 0.85lh),
     0 calc(100% - 1lh)
-   );
+  );
   width: fit-content;
 }
 .ribbon-nav:before,
 .ribbon-nav:after {
-  content:"";
+  content: "";
   position: absolute;
-  height: .7lh;
+  height: 0.7lh;
   width: var(--s);
-  background: color-mix(in srgb,var(--c),#000 40%);
+  background: color-mix(in srgb, var(--c), #000 40%);
   rotate: var(--a);
 }
 .ribbon-nav:before {
-  top: .15lh;
+  top: 0.15lh;
   right: 0;
   transform-origin: top right;
-  clip-path: polygon(0 0,100% 0,calc(100% - .7lh/tan(var(--a))) 100%,0 100%, var(--r) 50%);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    calc(100% - 0.7lh / tan (var(--a))) 100%,
+    0 100%,
+    var(--r) 50%
+  );
 }
 .ribbon-nav:after {
-  bottom: .15lh;
+  bottom: 0.15lh;
   left: 0;
   transform-origin: bottom left;
-  clip-path: polygon(calc(.7lh/tan(var(--a))) 0,100% 0,calc(100% - var(--r)) 50%,100% 100%,0 100%);
+  clip-path: polygon(
+    calc(0.7lh / tan (var(--a))) 0,
+    100% 0,
+    calc(100% - var(--r)) 50%,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* border */
+
+.block-border {
+  position: relative;
+}
+
+.block-border:before,
+.block-border:after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(
+    45deg,
+    #fb0094,
+    #0000ff,
+    #00ff00,
+    #ffff00,
+    #ff0000,
+    #fb0094,
+    #0000ff,
+    #00ff00,
+    #ffff00,
+    #ff0000
+  );
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.block-border:after {
+  filter: blur(50px);
+}
+
+/* delivery section border mask */
+.box {
+  --mask: linear-gradient(#000 0 0) center/calc(100% - 60px) calc(100% - 60px)
+      no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 0 0 /60px
+      30px space no-repeat,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 0
+      100%/60px 30px space no-repeat,
+    conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) 0 0 /30px
+      60px no-repeat space,
+    conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg)
+      100% 0/30px 60px no-repeat space;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+/* delivery ribbon */
+/* HTML: <div class="ribbon">Your text content</div> */
+.ribbon-delivery {
+  font-weight: bold;
+  color: #fff;
+}
+.ribbon-delivery {
+  --r: 0.8em; /* control the cutout */
+
+  border-inline: 0.5em solid #0000;
+  padding: 0.5em 0.2em calc(var(--r) + 0.2em);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    calc(100% - 0.5em) 100%,
+    50% calc(100% - var(--r)),
+    0.5em 100%,
+    0 100%
+  );
+  background: radial-gradient(50% 0.2em at top, #000a, #0000) border-box,
+    #2699dc padding-box; /* the color  */
+  width: fit-content;
 }

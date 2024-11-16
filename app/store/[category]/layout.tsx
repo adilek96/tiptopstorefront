@@ -16,13 +16,6 @@ export default async function StoreLayout({
   const data = await getCategories();
 
   return (
-    <div className="flex justify-center flex-col items-center">
-      <section className="w-[90%] mx-auto mt-10  py-3 px-2   flex gap-2 items-center justify-around shadow-lg  ">
-        <CategorySelector data={data} />
-        <SortingSelector />
-      </section>
-
-      {children}
-    </div>
+    <div className="flex justify-center flex-col items-center">{children}</div>
   );
 }
