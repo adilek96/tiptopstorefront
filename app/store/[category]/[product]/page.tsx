@@ -1,3 +1,4 @@
+"use client";
 import { ShoppingCart, Pointer } from "lucide-react";
 import { getProduct } from "@/app/services/getProduct";
 import { Button } from "@/components/ui/button";

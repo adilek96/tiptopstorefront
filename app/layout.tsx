@@ -28,7 +28,7 @@ export default function RootLayout({
         <StoreHeader />
 
         <main className="relative">
-          <SnowfallEffect />
+          {/* <SnowfallEffect /> */}
           {children}
         </main>
         <Footer />
