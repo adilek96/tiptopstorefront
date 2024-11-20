@@ -33,10 +33,10 @@ export default function ProductCard({
               transition={{ duration: 0.3 }}
             />
           </div>
-          <h3 className="text-calc2xl font-bold mb-2 h-20 text-gray-700">
+          <h3 className="text-calcxl font-bold mb-2 h-24 text-gray-700">
             {data.title}
           </h3>
-          <p className="text-sm text-gray-600 mb-4">{data.subtitle}</p>
+          <p className="text-sm text-gray-600 h-14 mb-4">{data.subtitle}</p>
           <p className="text-[12px] text-gray-600 mb-4">{variant.title}</p>
           <div className="flex items-center justify-between mb-4">
             <span className="text-3xl font-bold text-green-900">
@@ -49,7 +49,7 @@ export default function ProductCard({
             <ShoppingCart className="mr-2 h-6 w-6 " />
             Добавить в корзину
           </Button>
-          <Button className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white h">
+          <Button className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white ">
             <Pointer className="h-4 w-4" />
           </Button>
         </div>

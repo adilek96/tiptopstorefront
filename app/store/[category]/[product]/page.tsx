@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: any }) {
                   (variant: any, index: string) => (
                     <div
                       key={index}
-                      className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center text-calcsm  font-semibold text-gray-600 hover:text-amber-600 hover:scale-105  transition-all duration-300 `}
+                      className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center text-calcsm  font-semibold text-gray-600   transition-all duration-300 `}
                     >
                       <p className="pr-1">{variant.option.title}:</p>
                       <p>{variant.value}</p>
@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: any }) {
             {product.tags.map((tag: any, index: number) => (
               <div
                 key={index}
-                className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center text-calcsm  font-semibold text-gray-600 hover:text-amber-600 hover:scale-5 transition-all duration-300  `}
+                className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center text-calcsm  font-semibold text-gray-600  transition-all duration-300  `}
               >
                 <p>{tag.value}</p>
               </div>

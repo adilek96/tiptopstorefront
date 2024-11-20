@@ -31,7 +31,7 @@ export default function Component() {
   ];
 
   return (
-    <header className="bg-white shadow-2xl w-full block-border">
+    <header className="bg-white shadow-2xl w-full ">
       <div className="container h-32 mx-auto px-4 py-6 flex items-center justify-between ">
         <Sheet>
           <SheetTrigger asChild>
@@ -101,10 +101,7 @@ export default function Component() {
                   key={item.href}
                   className={`hover:scale-110 transition-all duration-300 ribbon-menu z-10 ${item.color}`}
                 >
-                  <Link
-                    href={item.href}
-                    className={`hover:animate-pulse px-3  transition-all duration-300  `}
-                  >
+                  <Link href={item.href} className={` px-3   `}>
                     {item.title}
                   </Link>
                 </li>
