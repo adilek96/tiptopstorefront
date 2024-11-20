@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Pointer } from "lucide-react";
+import { useCart } from "@/providers/CartProvider";
 import Link from "next/link";
 
 export default function ProductCard({
@@ -14,6 +15,7 @@ export default function ProductCard({
   variant: any;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const { cart, addItem, loading } = useCart();
 
   return (
     <Card
@@ -45,11 +47,14 @@ export default function ProductCard({
           </div>
         </Link>
         <div className="flex space-x-2">
-          <Button className="flex-1 h-12 bg-amber-500 hover:bg-amber-600">
+          <Button
+            onClick={() => addItem(variant.id, 1)}
+            className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 transition-all duration-300"
+          >
             <ShoppingCart className="mr-2 h-6 w-6 " />
             Добавить в корзину
           </Button>
-          <Button className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white ">
+          <Button className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white transition-all duration-300">
             <Pointer className="h-4 w-4" />
           </Button>
         </div>

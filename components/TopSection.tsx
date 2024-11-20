@@ -1,13 +1,14 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { getTopProducts } from "@/app/services/getTopProducts";
+export const dynamic = "force-dynamic";
 
 export default async function TopSection() {
   const products = await getTopProducts();
 
   return (
     <section className="relative mt-5 mb-8 w-[96%] flex items-center justify-center flex-col ">
-      <div className="ribbon mt-5 absolute top-10 left-0 z-50">
+      <div className="ribbon mt-5 absolute top-5 text-calc2xl left-0 z-50">
         <span className="px-6">Топ 10</span>
       </div>
       <div className="w-full bg-white shadow-2xl px-10 py-24 rounded-md">

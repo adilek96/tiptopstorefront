@@ -31,7 +31,7 @@ export default function Component() {
   ];
 
   return (
-    <header className="bg-white shadow-2xl w-full ">
+    <header className="bg-white shadow-2xl w-full block-border">
       <div className="container h-32 mx-auto px-4 py-6 flex items-center justify-between ">
         <Sheet>
           <SheetTrigger asChild>

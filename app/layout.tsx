@@ -4,6 +4,7 @@ import StoreHeader from "@/components/StoreHeader";
 import Footer from "@/components/Footer";
 import SnowfallEffect from "../components/SnowfallEffect";
 import { Montserrat } from "next/font/google";
+import { CartProvider } from "@/providers/CartProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ export default function RootLayout({
 
         <main className="relative">
           <SnowfallEffect />
-          {children}
+          <CartProvider>{children}</CartProvider>
         </main>
         <Footer />
       </body>
