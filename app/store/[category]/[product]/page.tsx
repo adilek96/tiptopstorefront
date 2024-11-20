@@ -1,4 +1,3 @@
-"use client";
 import { ShoppingCart, Pointer } from "lucide-react";
 import { getProduct } from "@/app/services/getProduct";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ export default async function Page({ params }: { params: any }) {
   const data = await getProduct(slug.product);
 
   if (!data) {
-    return <div>Загрузка</div>;
+    return <div>Загрузка...</div>;
   }
 
   if (!data.data.product && data.data.type === "not_found") {
