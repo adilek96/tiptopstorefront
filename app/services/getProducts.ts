@@ -27,7 +27,9 @@ export async function getProducts(slug : string) {
       headers: {
         "Content-Type": "application/json",
         "x-publishable-api-key": `${key}`,
+        cache: "no-store",
       }
+    
     });
 
 
