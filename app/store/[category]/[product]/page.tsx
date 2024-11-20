@@ -74,7 +74,7 @@ export default async function Page({ params }: { params: any }) {
                 <span>Добавить в корзину</span>
               </Button>
               <Button className="bg-amber-600 sm:flex-1  h-12 hover:bg-amber-700 border-amber-700 text-white  ">
-                <Pointer className="h-4 w-4" />{" "}
+                <Pointer className="h-4 w-4" />
                 <span className="sm:block hidden">Купить сейчас</span>
               </Button>
             </div>
