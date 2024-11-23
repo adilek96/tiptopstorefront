@@ -1,5 +1,6 @@
 'use server'
 import { getMedusaURL } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 export async function getCartItems(slug : string) {
 
@@ -23,6 +24,7 @@ export async function getCartItems(slug : string) {
     const data = await response.json();
     if (data.error) return { ok: false, data: null, error: data.error };
 
+    revalidatePath("/cart")
     return { ok: true, data: data, error: null };
     
   } catch (error) {
