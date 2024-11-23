@@ -13,15 +13,22 @@ import { completeCart } from "@/app/services/completeCart";
 interface CartContextType {
   cartId: string | null;
   cart: any;
-  cartProducts: any;
+  singleCartId: string | null;
+  singleCart: any;
   loading: boolean;
   updateQuantity: (variantId: string, quantity: number) => Promise<void>;
   addItem: (variantId: string, quantity: number) => Promise<void>;
+  addSingleItem: (variantId: string, quantity: number) => Promise<void>;
   fetchCart: () => Promise<void>;
+  fetchSingleCart: () => Promise<void>;
   deleteProduct: (variantId: string) => Promise<void>;
+  deleteSingleProduct: (variantId: string) => Promise<void>;
+  resetCartState: () => void;
   addShippingMethodToCart: (
     optionId: string,
-    shippingData: object
+    shippingData: object,
+    validCartId: string,
+    validType: string
   ) => Promise<
     | {
         ok: boolean;
@@ -45,7 +52,7 @@ interface CartContextType {
       }
     | undefined
   >;
-  closeCart: () => Promise<
+  closeCart: (validCartId: string) => Promise<
     | {
         ok: boolean;
         error: any;
@@ -78,14 +85,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [cartId, setCartId] = useState<string | null>(null);
+  const [singleCartId, setSingleCartId] = useState<string | null>(null);
   const [cart, setCart] = useState<any>(null);
-  const [cartProducts, setCartProducts] = useState<any>([]);
+  const [singleCart, setSingleCart] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [trigger, setTrigger] = useState<boolean>(false);
 
   // Проверка корзины и создание новой при необходимости
+
   useEffect(() => {
     const initializeCart = async () => {
       const storedCartId = localStorage.getItem("cart_id");
+      const singleStoreCartId = localStorage.getItem("singleCart_id");
 
       if (storedCartId) {
         setCartId(storedCartId);
@@ -97,12 +108,90 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         localStorage.setItem("cart_id", newCartId);
         await fetchCart(newCartId);
       }
+      // для единичной покупки
+      if (singleStoreCartId) {
+        setSingleCartId(singleStoreCartId);
+        await fetchSingleCart(singleStoreCartId);
+      } else {
+        const response = await createCart();
+        const newSingleCartId = response.data.cart.id;
+        setSingleCartId(newSingleCartId);
+        localStorage.setItem("singleCart_id", newSingleCartId);
+        await fetchSingleCart(newSingleCartId);
+      }
 
       setLoading(false);
     };
 
     initializeCart();
-  }, []);
+  }, [trigger]);
+
+  // Функция для получения содержимого корзины единичной покупки
+  const fetchSingleCart = async (id: string | null = cartId) => {
+    if (!id) return;
+    try {
+      const response = await getCartItems(id);
+      if (response?.data) {
+        setSingleCart(response.data);
+      } else {
+        console.error("Нет данных о корзине:", response);
+      }
+    } catch (error) {
+      console.error("Ошибка загрузки корзины:", error);
+    }
+  };
+
+  // Добавление единичного товара в корзину
+  const addSingleItem = async (variants: string, quantity: number) => {
+    if (!singleCartId) return;
+
+    if (singleCart.cart.items.length === 0) {
+      try {
+        const response = await addItemsToCart(variants, quantity, singleCartId);
+        console.log(response);
+        if (response.ok) {
+          await fetchSingleCart(singleCartId);
+        } else {
+          console.error("Ошибка добавления товара:", response);
+        }
+      } catch (error) {
+        console.error("Ошибка добавления товара:", error);
+      }
+    } else {
+      for (const item of singleCart.cart.items) {
+        try {
+          await deleteSingleProduct(item.id);
+        } catch (error) {
+          console.error("Очистка корзины не удалась:", error);
+        }
+      }
+      try {
+        const response = await addItemsToCart(variants, quantity, singleCartId);
+        if (response.ok) {
+          await fetchSingleCart(singleCartId);
+        } else {
+          console.error("Ошибка добавления товара:", response);
+        }
+      } catch (error) {
+        console.error("Ошибка добавления товара:", error);
+      }
+    }
+  };
+  // Удаление единичного товара из корзины
+  const deleteSingleProduct = async (variants: string) => {
+    if (!singleCartId) return;
+
+    try {
+      const response = await deleteProductFromCart(variants, singleCartId);
+      if (response.ok) {
+        await fetchSingleCart(singleCartId);
+      } else {
+        console.error("Ошибка добавления товара:", response);
+      }
+    } catch (error) {
+      console.error("Ошибка добавления товара:", error);
+    }
+  };
 
   // Функция для получения содержимого корзины
   const fetchCart = async (id: string | null = cartId) => {
@@ -175,14 +264,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addShippingMethodToCart = async (
     optionId: string,
-    shippingData: object
+    shippingData: object,
+    validCartId: string,
+    validType: string
   ) => {
-    if (!cartId) return;
+    if (!validCartId) return;
     try {
-      const response = await addShippingMethod(optionId, shippingData, cartId);
+      const response = await addShippingMethod(
+        optionId,
+        shippingData,
+        validCartId
+      );
       if (response.ok) {
-        // console.log("Метод доставки успешно добавлен", response);
-        await fetchCart(cartId);
+        if (validType !== "multi") {
+          await fetchSingleCart(validCartId);
+        } else {
+          await fetchCart(validCartId);
+        }
+
         return { ok: true, data: response };
       } else {
         console.error("Ошибка добавления метода доставки:", response);
@@ -194,11 +293,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const closeCart = async () => {
-    if (!cartId) return;
+  const closeCart = async (validCartId: string) => {
+    if (!validCartId) return;
 
     try {
-      const response = await completeCart(cartId);
+      const response = await completeCart(validCartId);
       if (response.error) {
         console.error("Ошибка завершения корзины:", response.error);
         return { ok: false, error: response.error };
@@ -211,19 +310,29 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // сброс состояния
+  const resetCartState = () => {
+    setTrigger(!trigger);
+  };
+
   return (
     <CartContext.Provider
       value={{
         cartId,
         cart,
-        cartProducts,
         loading,
+        singleCartId,
+        singleCart,
+        fetchSingleCart,
+        addSingleItem,
+        deleteSingleProduct,
         addItem,
         updateQuantity,
         fetchCart,
         deleteProduct,
         closeCart,
         addShippingMethodToCart,
+        resetCartState,
       }}
     >
       {children}

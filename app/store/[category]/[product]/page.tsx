@@ -3,6 +3,7 @@ import { getProduct } from "@/app/services/getProduct";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import ImageSlider from "@/components/ImageSlider";
+import ProductButtons from "@/components/ProductButtons";
 
 export default async function Page({ params }: { params: any }) {
   const slug = await params;
@@ -68,16 +69,7 @@ export default async function Page({ params }: { params: any }) {
               &#8380;
             </p>
 
-            <div className="flex space-x-2 ">
-              <Button className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 text-calclg text-white ">
-                <ShoppingCart className="mr-2 h-6 w-6 " />
-                <span>Добавить в корзину</span>
-              </Button>
-              <Button className="bg-amber-600 sm:flex-1  h-12 hover:bg-amber-700 border-amber-700 text-white  ">
-                <Pointer className="h-4 w-4" />
-                <span className="sm:block hidden">Купить сейчас</span>
-              </Button>
-            </div>
+            <ProductButtons id={product.variants[0].id} />
           </div>
         </div>
       </section>

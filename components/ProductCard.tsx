@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Pointer } from "lucide-react";
+import { ShoppingCart, Pointer, Check } from "lucide-react";
 import { useCart } from "@/providers/CartProvider";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ProductCard({
   data,
@@ -15,7 +16,29 @@ export default function ProductCard({
   variant: any;
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const { cart, addItem, loading } = useCart();
+  const [isInCart, setIsInCart] = useState(false);
+  const { addItem, addSingleItem, cart } = useCart();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (cart) {
+      cart.cart.items.map((item: any) => {
+        if (item.variant_id === variant.id) {
+          setIsInCart(true);
+        }
+      });
+    }
+  }, [cart]);
+
+  const singleHandler = async (id: string) => {
+    try {
+      await addSingleItem(id, 1);
+    } catch (error) {
+      console.log("Ошибка при добавлении товара в корзину");
+    }
+
+    router.push(`/checkout/${id}`);
+  };
 
   return (
     <Card
@@ -23,6 +46,9 @@ export default function ProductCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      <div className="ribbon-sale text-calc2xl bg-red-700 py-1 z-20 ">
+        <p className="mx-5 animate-pulse">Распродажа</p>
+      </div>
       <CardContent className="p-6 cursor-pointer ">
         <Link href={`/store/products/${data.id}`}>
           <div className="relative aspect-square mb-4 overflow-hidden rounded-lg">
@@ -40,21 +66,48 @@ export default function ProductCard({
           </h3>
           <p className="text-sm text-gray-600 h-14 mb-4">{data.subtitle}</p>
           <p className="text-[12px] text-gray-600 mb-4">{variant.title}</p>
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-3xl font-bold text-green-900">
-              {variant.calculated_price.calculated_amount} &#8380;
-            </span>
+          <div className="flex items-center justify-start gap-3 mb-4">
+            {variant.calculated_price.is_calculated_price_price_list ? (
+              <>
+                <span className="text-xl line-through font-bold text-green-900">
+                  {variant.calculated_price.original_amount} &#8380;
+                </span>
+                <span className="text-3xl font-bold text-red-700 animate-bounce">
+                  {variant.calculated_price.calculated_amount} &#8380;
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="text-3xl font-bold text-green-900">
+                  {variant.calculated_price.original_amount} &#8380;
+                </span>
+              </>
+            )}
           </div>
         </Link>
         <div className="flex space-x-2">
+          {isInCart ? (
+            <Button
+              onClick={() => router.push("/cart")}
+              className="flex-1 h-12 bg-green-500 hover:bg-green-600 text-calclg text-white "
+            >
+              <Check className="mr-2 h-6 w-6 " />
+              <span>В корзине</span>
+            </Button>
+          ) : (
+            <Button
+              onClick={() => addItem(variant.id, 1)}
+              className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 transition-all duration-300"
+            >
+              <ShoppingCart className="mr-2 h-6 w-6 " />
+              Добавить в корзину
+            </Button>
+          )}
+
           <Button
-            onClick={() => addItem(variant.id, 1)}
-            className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 transition-all duration-300"
+            onClick={() => singleHandler(variant.id)}
+            className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white transition-all duration-300"
           >
-            <ShoppingCart className="mr-2 h-6 w-6 " />
-            Добавить в корзину
-          </Button>
-          <Button className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white transition-all duration-300">
             <Pointer className="h-4 w-4" />
           </Button>
         </div>

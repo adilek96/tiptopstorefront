@@ -2,6 +2,8 @@ import React from "react";
 import ProductCard from "./ProductCard";
 import { getTopProducts } from "@/app/services/getTopProducts";
 export const dynamic = "force-dynamic";
+import { Suspense } from "react";
+import Loading from "@/app/loading";
 
 export default async function TopSection() {
   const products = await getTopProducts();
@@ -12,11 +14,7 @@ export default async function TopSection() {
         <span className="px-6">Топ 10</span>
       </div>
       <div className="w-full bg-white shadow-2xl px-10 py-24 rounded-md">
-        {!products ? (
-          <div className="w-full h-24 flex justify-center items-center">
-            <p>Загрузка...</p>
-          </div>
-        ) : (
+        <Suspense fallback={<Loading />}>
           <div className="w-full    flex flex-wrap justify-center gap-10">
             {products.data.map((item: any, i: number) =>
               item.variants.map((variant: any) => (
@@ -29,7 +27,7 @@ export default async function TopSection() {
               ))
             )}
           </div>
-        )}
+        </Suspense>
       </div>
     </section>
   );

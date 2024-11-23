@@ -8,21 +8,34 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 export default function CheckOut({ slug }: { slug: any }) {
-  const { cart, closeCart, addShippingMethodToCart } = useCart();
-  const [validCart, setValidCart] = useState();
+  const {
+    cart,
+    singleCart,
+    cartId,
+    singleCartId,
+    deleteSingleProduct,
+    closeCart,
+    addShippingMethodToCart,
+  } = useCart();
+  const [validCart, setValidCart] = useState<any>();
+  const [validCartId, setValidCartId] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     if (slug.type === "multi") {
-      if (cart) {
+      if (cart && cartId) {
         setValidCart(cart);
+        setValidCartId(cartId);
       }
     }
-  }, [slug, cart]);
 
-  if (slug.type === "single") {
-    return <div>ds</div>;
-  }
+    if (slug.type !== "multi") {
+      if (singleCart && singleCartId) {
+        setValidCart(singleCart);
+        setValidCartId(singleCartId);
+      }
+    }
+  }, [slug, cart, singleCart]);
 
   if (!validCart) {
     return <div>Загрузка</div>;
@@ -34,7 +47,7 @@ export default function CheckOut({ slug }: { slug: any }) {
         <div className="ribbon-del flex justify-center absolute top-10 left-0 z-50">
           <span className="py-1">Оформление заказа</span>
         </div>
-        {cart.cart.items.length <= 0 ? (
+        {validCart.cart.items.length <= 0 ? (
           <div className="px-10 py-44 mx-auto flex justify-center items-center gap-5 flex-col">
             <p>Вы еще не выбрали товары для оформления.</p>
             <p>Перейдите в магазин для выбора товара.</p>
@@ -49,6 +62,8 @@ export default function CheckOut({ slug }: { slug: any }) {
           <CheckOutForm
             closeCart={closeCart}
             addShippingMethodToCart={addShippingMethodToCart}
+            validCartId={validCartId}
+            validType={slug.type}
           />
         )}
       </Card>

@@ -7,19 +7,19 @@ import Watsup from "@/public/Watsup";
 
 const sosialIcons = [
   {
-    url: "#",
+    url: "https://www.instagram.com/tiptop_az",
     icon: <Insta />,
   },
   {
-    url: "#",
+    url: "https://www.facebook.com/TipTopShop.az?mibextid=ZbWKwL",
     icon: <Face />,
   },
   {
-    url: "#",
+    url: "https://www.tiktok.com/@tiptop.az",
     icon: <Tiktok />,
   },
   {
-    url: "#",
+    url: "https://wa.me/+994553023230",
     icon: <Watsup />,
   },
 ];

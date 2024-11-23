@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ProductCard from "./ProductCard";
+import Loading from "@/app/loading";
 
 export default function ProductList({ data }: { data: any }) {
   if (!data || data.length === 0) {
@@ -11,16 +12,18 @@ export default function ProductList({ data }: { data: any }) {
   }
 
   return (
-    <div className="w-[100%]  py-5 px-2 mt-5 mb-10 flex flex-wrap justify-center gap-10">
-      {data.map((item: any) =>
-        item.variants.map((variant: any, i: number) => (
-          <ProductCard
-            key={variant.id}
-            data={item}
-            variant={item.variants[i]}
-          />
-        ))
-      )}
-    </div>
+    <Suspense fallback={<Loading />}>
+      <div className="w-[100%]  py-5 px-2 mt-5 mb-10 flex flex-wrap justify-center gap-10">
+        {data.map((item: any) =>
+          item.variants.map((variant: any, i: number) => (
+            <ProductCard
+              key={variant.id}
+              data={item}
+              variant={item.variants[i]}
+            />
+          ))
+        )}
+      </div>
+    </Suspense>
   );
 }

@@ -8,8 +8,7 @@ import { useCart } from "@/providers/CartProvider";
 import Summary from "./Summary";
 
 export default function CartProducts() {
-  const { cart, cartProducts, updateQuantity, deleteProduct, loading } =
-    useCart();
+  const { cart, updateQuantity, deleteProduct, loading } = useCart();
 
   if (loading) {
     return <div>Загрузка...</div>;
@@ -23,7 +22,9 @@ export default function CartProducts() {
             <span className="py-1">Ваша корзина</span>
           </div>
           <div className="ribbon  absolute top-20 text-[16px] left-0 z-50">
-            <span className="px-6">Всего товаров: {cartProducts.length}</span>
+            <span className="px-6">
+              Всего товаров: {cart.cart.items.length}
+            </span>
           </div>
 
           <CardContent className="space-y-4 mt-36">

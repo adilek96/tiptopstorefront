@@ -12,11 +12,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Confirm } from "./Confirm";
 
 interface CheckOutFormProps {
   addShippingMethodToCart: (
     optionId: string,
-    shippingData: object
+    shippingData: object,
+    validCartId: string,
+    validType: string
   ) => Promise<
     | {
         ok: boolean;
@@ -40,7 +43,9 @@ interface CheckOutFormProps {
       }
     | undefined
   >;
-  closeCart: () => Promise<
+  validCartId: string;
+  validType: string;
+  closeCart: (validCartId: string) => Promise<
     | {
         ok: boolean;
         error: any;
@@ -68,6 +73,8 @@ interface CheckOutFormProps {
 export default function CheckOutForm({
   closeCart,
   addShippingMethodToCart,
+  validCartId,
+  validType,
 }: CheckOutFormProps) {
   const [deliveryType, setDeliveryType] = useState("");
   const [metroStation, setMetroStation] = useState("");
@@ -79,7 +86,8 @@ export default function CheckOutForm({
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [warn, setWarn] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
+
+  const [isComplete, setIsComplete] = useState<boolean>(false);
   const [showBanner, setShowBanner] = useState(false);
 
   const deliveryHandle = () => {
@@ -117,7 +125,12 @@ export default function CheckOutForm({
 
     async function addShippingMethod() {
       try {
-        const response = await addShippingMethodToCart(deliveryId, requestData);
+        const response = await addShippingMethodToCart(
+          deliveryId,
+          requestData,
+          validCartId,
+          validType
+        );
         if (response?.ok) {
           return true;
         }
@@ -150,7 +163,7 @@ export default function CheckOutForm({
         const shipStatus = await deliveryHandle();
 
         if (shipStatus) {
-          const response = await closeCart();
+          const response = await closeCart(validCartId);
 
           if (response?.ok) {
             setShowBanner(true);
@@ -160,7 +173,11 @@ export default function CheckOutForm({
             setCity("");
             setDeliveryDate("");
             setMetroStation("");
-            localStorage.setItem("cart_id", "");
+            if (validType === "multi") {
+              localStorage.setItem("cart_id", "");
+            } else {
+              localStorage.setItem("singleCart_id", "");
+            }
           }
         } else {
           setShowBanner(true);
@@ -323,6 +340,8 @@ export default function CheckOutForm({
       ) : (
         <></>
       )}
+
+      <Confirm isComplete={isComplete} />
     </form>
   );
 }

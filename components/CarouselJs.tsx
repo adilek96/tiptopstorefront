@@ -29,7 +29,7 @@ const products = [
   },
   {
     id: 4,
-    name: "Гирлянда 'Бахрома'",
+    name: "Гирлянда 'Роса'",
     image: "testimg4.jpeg",
   },
 ];
@@ -69,13 +69,9 @@ export default function CarouselJs() {
           {products.map((product) => (
             <CarouselItem key={product.id} className="relative">
               <div className="h-[400px] w-full overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
+                <div className="w-full h-full  bg-gradient-to-r from-violet-500 to-fuchsia-500 blur-xl backdrop-blur-2xl" />
 
-                <h3 className=" absolute bottom-10 left-10 text-2xl md:text-3xl lg:text-4xl font-bold text-amber-500">
+                <h3 className=" absolute bottom-12 left-10 text-2xl md:text-3xl lg:text-4xl font-bold text-amber-500">
                   {product.name}
                 </h3>
               </div>
