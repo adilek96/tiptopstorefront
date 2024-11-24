@@ -48,7 +48,7 @@ export default function Component() {
             <div className="flex justify-center items-center">
               <Link href="/">
                 <Image
-                  src="/logotip.svg"
+                  src="/tiptop.svg"
                   alt="Store Logo"
                   width={200}
                   height={60}
@@ -78,12 +78,7 @@ export default function Component() {
 
         <div className="absolute left-1/2 transform -translate-x-1/2 ">
           <Link href="/">
-            <Image
-              src="/logotip.svg"
-              alt="Store Logo"
-              width={200}
-              height={60}
-            />
+            <Image src="/tiptop.svg" alt="Store Logo" width={200} height={60} />
           </Link>
         </div>
         <Link

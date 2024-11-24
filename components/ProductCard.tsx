@@ -111,11 +111,21 @@ export default function ProductCard({
           </div>
         </CardContent>
       </Card>
-      <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
-        <p className="whitespace-nowrap animate-marquee w-[150px] ">
-          Распродажа <span className="text-black"> "Black Friday"</span>
-        </p>
-      </div>
+      {variant.calculated_price.is_calculated_price_price_list ? (
+        // вариант с анимацией
+        // <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
+        //   <p className="whitespace-nowrap animate-marquee w-[150px] ">
+        //     Распродажа <span className="text-black"> "Black Friday"</span>
+        //   </p>
+        // </div>
+
+        <div className="ribbon-sale text-[14px]    bg-red-500  z-50 ">
+          <p className="text-center w-[190px] ">Распродажа</p>
+          <p className="text-black text-center"> "Black Friday"</p>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

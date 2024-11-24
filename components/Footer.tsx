@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="flex items-start justify-center w-full md:w-auto md:justify-start">
             <Link href="/" className="flex  flex-col justify-start">
               <Image
-                src="/logotip.svg"
+                src="/tiptop.svg"
                 alt="Store Logo"
                 width={250}
                 height={40}
