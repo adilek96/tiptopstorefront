@@ -1,6 +1,6 @@
 "use state";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Confirm } from "./Confirm";
+import Loading from "@/app/loading";
 
 interface CheckOutFormProps {
   addShippingMethodToCart: (
@@ -70,6 +71,34 @@ interface CheckOutFormProps {
   >;
 }
 
+const stations = [
+  { ru: "Дарнагуль", az: "Dərnəgül" },
+  { ru: "Азадлыг Проспекти", az: "Azadlıq Prospekti" },
+  { ru: "Насими", az: "Nəsimi" },
+  { ru: "Мемар Аджеми", az: "Memar Əcəmi" },
+  { ru: "20 Января", az: "20 Yanvar" },
+  { ru: "Иншаатчылар", az: "İnşaatçılar" },
+  { ru: "Эльмляр Академиясы", az: "Elmlər Akademiyası" },
+  { ru: "Низами", az: "Nizami" },
+  { ru: "Ичери Шехер", az: "İçəri Şəhər" },
+  { ru: "Сахил", az: "Sahil" },
+  { ru: "28 Мая", az: "28 May" },
+  { ru: "Гянджлик", az: "Gənclik" },
+  { ru: "Нариман Нариманов", az: "Nəriman Nərimanov" },
+  { ru: "Улдуз", az: "Ulduz" },
+  { ru: "Кероглу", az: "Köroğlu" },
+  { ru: "Гара Гараев", az: "Qara Qarayev" },
+  { ru: "Нефтчиляр", az: "Neftçilər" },
+  { ru: "Халглар Достлугу", az: "Xalqlar Dostluğu" },
+  { ru: "Ахмедли", az: "Əhmədli" },
+  { ru: "Хази Асланов", az: "Həzi Aslanov" },
+  { ru: "Хатаи", az: "Xətai" },
+  { ru: "Автовокзал", az: "Avtovağzal" },
+  { ru: "Ходжасан", az: "Xocəsən" },
+  { ru: "8 Ноября", az: "8 Noyabr" },
+  { ru: "Бакмиль", az: "Bakmil" },
+];
+
 export default function CheckOutForm({
   closeCart,
   addShippingMethodToCart,
@@ -78,7 +107,9 @@ export default function CheckOutForm({
 }: CheckOutFormProps) {
   const [deliveryType, setDeliveryType] = useState("");
   const [metroStation, setMetroStation] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [deliveryTime, setDeliveryTime] = useState("");
   const [consumerName, setConsumerName] = useState("");
   const [consumerLastName, setConsumerLastName] = useState("");
@@ -89,6 +120,27 @@ export default function CheckOutForm({
 
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [showBanner, setShowBanner] = useState(false);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    // Функция для загрузки данных из API
+    const fetchCities = async () => {
+      try {
+        const response = await fetch(
+          "https://api.opendata.az/v2/az/json/map/geographic/district"
+        );
+        if (!response.ok) {
+          throw new Error("Ошибка при загрузке данных");
+        }
+        const data = await response.json();
+        setCities(data.districts);
+      } catch (error) {
+        console.error("Ошибка загрузки городов:", error);
+      }
+    };
+
+    fetchCities();
+  }, []);
 
   const deliveryHandle = () => {
     let deliveryId = "";
@@ -111,6 +163,8 @@ export default function CheckOutForm({
         consumerLastName,
         consumerPhone,
         address,
+        deliveryDate,
+        deliveryTime,
       };
     } else if (deliveryType === "country") {
       deliveryId = "so_01JCKDY5CCK7FZ47AXVY1GQ7AF";
@@ -256,9 +310,11 @@ export default function CheckOutForm({
                 <SelectValue placeholder="Выберите станцию метро" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="station1">Станция 1</SelectItem>
-                <SelectItem value="station2">Станция 2</SelectItem>
-                <SelectItem value="station3">Станция 3</SelectItem>
+                {stations.map((station) => (
+                  <SelectItem key={station.az} value={station.az}>
+                    {station.az}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -267,6 +323,8 @@ export default function CheckOutForm({
             <Input
               id="deliveryDate"
               type="date"
+              value={deliveryDate}
+              min={new Date().toISOString().split("T")[0]}
               onChange={(e) => setDeliveryDate(e.target.value)}
             />
           </div>
@@ -287,13 +345,36 @@ export default function CheckOutForm({
       )}
 
       {deliveryType === "city" && (
-        <div>
+        <div className="space-y-4">
           <Label htmlFor="cityAddress">Адрес доставки</Label>
           <Input
             id="cityAddress"
             required
             onChange={(e) => setAddress(e.target.value)}
           />
+          <div>
+            <Label htmlFor="deliveryDate">Дата доставки</Label>
+            <Input
+              id="deliveryDate"
+              type="date"
+              value={deliveryDate}
+              min={new Date().toISOString().split("T")[0]}
+              onChange={(e) => setDeliveryDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="deliveryTime">Время доставки</Label>
+            <Select onValueChange={setDeliveryTime} required>
+              <SelectTrigger>
+                <SelectValue placeholder="Выберите время доставки" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="12:00-15:00">12:00 - 15:00</SelectItem>
+                <SelectItem value="15:00-18:00">15:00 - 18:00</SelectItem>
+                <SelectItem value="18:00-22:00">18:00 - 22:00</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       )}
 
@@ -301,18 +382,19 @@ export default function CheckOutForm({
         <div className="space-y-4">
           <div>
             <Label htmlFor="countryCity">Город</Label>
+
             <Select onValueChange={setCity} required>
               <SelectTrigger>
                 <SelectValue placeholder="Выберите город" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="moscow">Москва</SelectItem>
-                <SelectItem value="saint-petersburg">
-                  Санкт-Петербург
-                </SelectItem>
-                <SelectItem value="novosibirsk">Новосибирск</SelectItem>
-                <SelectItem value="yekaterinburg">Екатеринбург</SelectItem>
-                <SelectItem value="kazan">Казань</SelectItem>
+                <Suspense fallback={<Loading />}>
+                  {cities.map((city: any) => (
+                    <SelectItem key={city.id} value={city.name}>
+                      {city.name}
+                    </SelectItem>
+                  ))}
+                </Suspense>
               </SelectContent>
             </Select>
           </div>

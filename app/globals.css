@@ -407,15 +407,18 @@
 /* ------------------------- */
 
 /* HTML: <div class="ribbon">Your text content</div> */
+/* HTML: <div class="ribbon">Your text content</div> */
+/* HTML: <div class="ribbon">Your text content</div> */
 .ribbon-sale {
   font-weight: bold;
   color: #fff;
 }
 .ribbon-sale {
   --f: 0.5em; /* control the folded part */
+
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   line-height: 1.8;
   padding-inline: 1lh;
   padding-bottom: var(--f);
@@ -430,7 +433,18 @@
     999px calc(100% - var(--f) - 999px),
     calc(100% - 999px) calc(100% - var(--f) - 999px)
   );
-  transform: translate(calc((1 - cos(45deg)) * 100%), -100%) rotate(45deg);
-  transform-origin: 0% 100%;
-  /* the main color  */
+  transform: translate(calc((cos(45deg) - 1) * 100%), -100%) rotate(-45deg);
+  transform-origin: 100% 100%;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(180%);
+  }
+  100% {
+    transform: translateX(-220%);
+  }
+}
+.animate-marquee {
+  animation: marquee 10s linear infinite;
 }

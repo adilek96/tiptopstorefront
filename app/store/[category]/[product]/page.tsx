@@ -22,7 +22,18 @@ export default async function Page({ params }: { params: any }) {
   return (
     <div className="w-full flex flex-col justify-center items-center my-10 cursor-default">
       <section className="flex flex-row bg-white w-[95%] shadow-xl rounded-md z-10 py-16 flex-wrap gap-10 justify-center ">
-        <div className="mdx:w-[40%] px-3 w-full">
+        <div className="mdx:w-[40%] relative px-3 w-full">
+          {product.variants[0].calculated_price
+            .is_calculated_price_price_list ? (
+            <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
+              <p className="whitespace-nowrap animate-marquee w-[150px] ">
+                Распродажа <span className="text-black"> "Black Friday"</span>
+              </p>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <ImageSlider images={product.images} thumbnail={product.thumbnail} />
         </div>
         <div className="mdx:w-[40%] w-full px-10 mdx:px-1 flex flex-col justify-between gap-10 items-center md:py-14">
@@ -64,10 +75,34 @@ export default async function Page({ params }: { params: any }) {
             ))}
           </div>
           <div className="w-full">
-            <p className="text-3xl font-bold text-nowrap text-green-900 mb-5">
-              Цена {product.variants[0].calculated_price.calculated_amount}
-              &#8380;
-            </p>
+            {product.variants[0].calculated_price
+              .is_calculated_price_price_list ? (
+              <>
+                <p className="text-xl line-through font-bold text-nowrap text-green-900 mb-5">
+                  Цена: {product.variants[0].calculated_price.original_amount}
+                  &#8380;
+                </p>
+
+                <div className="text-2xl flex flex-row flex-nowrap gap-2  font-bold text-nowrap text-red-700 mb-5">
+                  <p>Скидочная цена: </p>
+                  <p className="animate-bounce text-3xl">
+                    {product.variants[0].calculated_price.calculated_amount}
+                    &#8380;
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-3xl font-bold text-nowrap text-green-900 mb-5">
+                  Цена:
+                  {
+                    product.variants[0].calculated_price.calculated_price
+                      .original_amount
+                  }
+                  &#8380;
+                </p>
+              </>
+            )}
 
             <ProductButtons id={product.variants[0].id} />
           </div>

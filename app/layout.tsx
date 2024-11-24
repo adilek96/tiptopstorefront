@@ -26,13 +26,15 @@ export default function RootLayout({
       <body
         className={` antialiased overflow-x-hidden ${montserrat.className}`}
       >
-        <StoreHeader />
+        <CartProvider>
+          <StoreHeader />
 
-        <main className="relative">
-          <SnowfallEffect />
-          <CartProvider>{children}</CartProvider>
-        </main>
-        <Footer />
+          <main className="relative">
+            <SnowfallEffect />
+            {children}
+          </main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

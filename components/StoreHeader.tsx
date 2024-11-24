@@ -10,8 +10,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import SocialHeader from "./SocialHeader";
+import { useCart } from "@/providers/CartProvider";
 
 export default function Component() {
+  const { cart } = useCart();
+
   const navItems = [
     {
       href: "/",
@@ -85,9 +88,17 @@ export default function Component() {
         </div>
         <Link
           href="/cart"
-          className="text-gray-600 hover:text-amber-600 hover:scale-125 transition-all duration-300"
+          className="text-gray-600 relative hover:text-amber-600 hover:scale-125 transition-all duration-300"
         >
           <ShoppingCart className="h-6 w-6" />
+          {cart?.cart.items.length > 0 ? (
+            <div className="bg-red-500 w-4 h-4 absolute animate-bounce -top-3 -right-3 flex text-[12px]  justify-center items-center text-white  rounded-full">
+              <p>{cart.cart.items.length}</p>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <span className="sr-only">View cart</span>
         </Link>
       </div>

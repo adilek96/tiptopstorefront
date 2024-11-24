@@ -39,12 +39,12 @@ export default function Footer() {
 
           {/* Additional Links */}
           <nav className="flex  flex-col justify-center items-center md:items-start space-y-4">
-            <Link
+            {/* <Link
               href="/profile"
               className="hover:text-amber-600 transition-colors"
             >
               Личный кабинет
-            </Link>
+            </Link> */}
             <Link
               href="/contact#delivery"
               className="hover:text-amber-600 transition-colors"
