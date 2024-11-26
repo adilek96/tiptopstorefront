@@ -11,6 +11,7 @@ export default function ImageSlider({
   thumbnail: string;
 }) {
   const [mainImage, setMainImage] = useState(thumbnail);
+  console.log(mainImage);
   return (
     <div className="space-y-4 min-w-[360px]  px-4 sm:px-0">
       <div className="relative aspect-square border-[4px] rounded-lg border-amber-500">

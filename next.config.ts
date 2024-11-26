@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         pathname: '/**', 
       },
       {
-        protocol: 'http', 
+        protocol: 'https', 
         hostname: 'blob.tiptop.az',
         pathname: '/**', 
       },
