@@ -94,11 +94,8 @@ export default async function Page({ params }: { params: any }) {
             ) : (
               <>
                 <p className="text-3xl font-bold text-nowrap text-green-900 mb-5">
-                  Цена:
-                  {
-                    product.variants[0].calculated_price.calculated_price
-                      .original_amount
-                  }
+                  <span>Цена: </span>
+                  {product.variants[0].calculated_price.original_amount}
                   &#8380;
                 </p>
               </>
