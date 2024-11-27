@@ -27,7 +27,8 @@ export default async function Page({ params }: { params: any }) {
             .is_calculated_price_price_list ? (
             <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
               <p className="whitespace-nowrap animate-marquee w-[150px] ">
-                Распродажа <span className="text-black"> "Black Friday"</span>
+                Распродажа
+                {/* <span className="text-black"> "Black Friday"</span> */}
               </p>
             </div>
           ) : (

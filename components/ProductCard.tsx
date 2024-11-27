@@ -121,7 +121,7 @@ export default function ProductCard({
 
         <div className="ribbon-sale text-[14px]    bg-red-500  z-50 ">
           <p className="text-center w-[190px] ">Распродажа</p>
-          <p className="text-black text-center"> "Black Friday"</p>
+          {/* <p className="text-black text-center"> "Black Friday"</p> */}
         </div>
       ) : (
         <></>
