@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: any }) {
             <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
               <p className="whitespace-nowrap animate-marquee w-[150px] ">
                 Распродажа
-                <span className="text-black"> "Black Friday"</span>
+                {/* <span className="text-black"> "Black Friday"</span> */}
               </p>
             </div>
           ) : (
