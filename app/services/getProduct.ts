@@ -7,6 +7,8 @@ export async function getProduct(slug : string) {
   const baseUrl = getMedusaURL();
   const url = new URL(`/store/products/${slug}?region_id=${regionid}`, baseUrl);
   const key = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY;
+
+  
  
 
 
@@ -21,6 +23,7 @@ export async function getProduct(slug : string) {
 
 
     const data = await response.json();
+ 
     if (data.error) return { ok: false, data: null, error: data.error };
 
     return { ok: true, data: data, error: null };

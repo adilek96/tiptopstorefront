@@ -14,15 +14,20 @@ export default function ProductList({ data }: { data: any }) {
   return (
     <Suspense fallback={<Loading />}>
       <div className="w-[100%]  py-5 px-2 mt-5 mb-10 flex flex-wrap justify-center gap-10">
-        {data.map((item: any) =>
-          item.variants.map((variant: any, i: number) => (
-            <ProductCard
-              key={variant.id}
-              data={item}
-              variant={item.variants[i]}
-            />
-          ))
-        )}
+        {data.map((item: any) => (
+          //!!!!!! закомментированный код - отображает на каждый вариант товара свою карточку в всписке продуктов
+
+          // item.variants.map((variant: any, i: number) => (
+          //   <ProductCard
+          //     key={variant.id}
+          //     data={item}
+          //     variant={item.variants[i]}
+          //   />
+          // ))
+
+          //!!!!!! отображает только первый вариант товара в списке продуктов
+          <ProductCard key={item.id} data={item} variant={item.variants[0]} />
+        ))}
       </div>
     </Suspense>
   );

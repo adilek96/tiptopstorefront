@@ -12,13 +12,17 @@ export default function ProductButtons(id: string | any) {
 
   useEffect(() => {
     if (cart) {
-      cart.cart.items.map((item: any) => {
-        if (item.variant_id === id.id) {
-          setIsInCart(true);
-        }
-      });
+      const foundItem = cart.cart.items.find(
+        (item: any) => item.variant_id === id.id
+      );
+
+      if (foundItem) {
+        setIsInCart(true);
+      } else {
+        setIsInCart(false);
+      }
     }
-  }, [cart]);
+  }, [cart, id.id]);
 
   const singleHandler = async (id: string) => {
     try {
