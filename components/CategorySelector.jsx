@@ -11,6 +11,11 @@ import { useRouter } from "next/navigation";
 
 export default function CategorySelector({ data }) {
   const router = useRouter();
+  
+  if (!data || !data.data || !data.data.product_categories) {
+    return null;
+  }
+  
   const categories = data.data.product_categories;
 
   return (

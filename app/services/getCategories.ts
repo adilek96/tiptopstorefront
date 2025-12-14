@@ -17,7 +17,9 @@ export async function getCategories() {
       headers: {
         "Content-Type": "application/json",
         "x-publishable-api-key": `${key}`,
-      }
+      },
+      cache: "no-store",
+      next: { revalidate: 0 }
     });
     const data = await response.json();
     if (data.error) return { ok: false, data: null, error: data.error };
@@ -40,7 +42,9 @@ export async function getCategoriesId(slug: string) {
         headers: {
           "Content-Type": "application/json",
           "x-publishable-api-key": `${key}`,
-        }
+        },
+        cache: "no-store",
+        next: { revalidate: 0 }
       });
       const data = await response.json();
       if (data.error) return { ok: false, data: null, error: data.error };

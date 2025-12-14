@@ -6,11 +6,17 @@ import SortingSelector from "@/components/SortingSelector";
 import { getCategories } from "@/app/services/getCategories";
 import Loading from "@/app/loading";
 
-export default async function Page({ params }: { params: any }) {
+export default async function Page({ params, searchParams }: { params: any, searchParams: any }) {
   const slug = await params;
+  const search = await searchParams;
 
-  const data = await getProducts(slug.category);
+  const data = await getProducts(slug.category, search?.sort);
   const category = await getCategories();
+
+  // Проверяем что категории загрузились
+  if (!category || !category.ok) {
+    console.error("Failed to load categories:", category?.error);
+  }
 
   return (
     <>

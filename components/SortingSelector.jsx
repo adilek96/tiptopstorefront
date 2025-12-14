@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -7,18 +7,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export default function SortingSelector() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [currentSort, setCurrentSort] = useState("");
+
+  useEffect(() => {
+    const sortFromUrl = searchParams.get("sort") || "created_at";
+    setCurrentSort(sortFromUrl);
+  }, [searchParams]);
+
+  const handleSortChange = (value) => {
+    console.log("🔄 Sort changed to:", value);
+    setCurrentSort(value);
+    const params = new URLSearchParams(searchParams);
+    params.set("sort", value);
+    const newUrl = `${pathname}?${params.toString()}`;
+    console.log("🔗 Navigating to:", newUrl);
+    
+    // Принудительная перезагрузка
+    router.push(newUrl);
+    router.refresh();
+  };
+
   return (
-    <Select
-      onValueChange={(e) => {
-        Cookies.set("sortOption", e);
-        router.refresh();
-      }}
-    >
+    <Select value={currentSort} onValueChange={handleSortChange}>
       <SelectTrigger className="w-[180px] bg-white shadow-lg z-10">
         <SelectValue placeholder="Сортировка" />
       </SelectTrigger>

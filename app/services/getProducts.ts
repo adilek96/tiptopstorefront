@@ -1,22 +1,21 @@
 'use server'
-import { cookies } from "next/headers";
 import { getMedusaURL } from "@/lib/utils";
 import { getCategoriesId } from "./getCategories";
 
 
-export async function getProducts(slug : string) {
+export async function getProducts(slug : string, sortParam?: string) {
 
-  const cookieStore = cookies();
-
-  let sortOption = (await cookieStore).get("sortOption")?.value || "created_at";
+  let sortOption = sortParam || "created_at";
   if(sortOption === "price" || sortOption === "-price"){
     sortOption = "created_at"
   }
 
+  console.log("🔍 getProducts called with:", { slug, sortParam, finalSortOption: sortOption });
+
   const categoryId = await getCategoriesId(slug)
   const regionid = "reg_01JCJKAS5JFH0706TQKGJDRPEZ";
   const baseUrl = getMedusaURL();
-  const url = new URL(`/store/products?region_id=${regionid}&category_id=${categoryId}&order=${sortOption}`, baseUrl);
+  const url = new URL(`/store/products?region_id=${regionid}&category_id=${categoryId}`, baseUrl);
   const key = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY;
  
 
@@ -27,14 +26,16 @@ export async function getProducts(slug : string) {
       headers: {
         "Content-Type": "application/json",
         "x-publishable-api-key": `${key}`,
-        cache: "no-store",
-      }
-    
+      },
+      cache: "no-store",
+      next: { revalidate: 0 }
     });
 
 
     const data = await response.json();
     if (data.error) return { ok: false, data: null, error: data.error };
+
+    console.log("📦 API Response:", data.products?.length, "products");
 
     return { ok: true, data: data.products, error: null };
     
