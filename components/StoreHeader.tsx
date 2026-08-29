@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import SocialHeader from "./SocialHeader";
 import { useCart } from "@/providers/CartProvider";
+import SearchBox from "./SearchBox";
 
 export default function Component() {
   const { cart } = useCart();
@@ -71,10 +72,16 @@ export default function Component() {
                 })}
               </ul>
             </nav>
+
+            <div className="mt-8 px-2">
+              <SearchBox />
+            </div>
           </SheetContent>
         </Sheet>
 
-        <div className="hidden md:block"></div>
+        <div className="hidden md:block w-72">
+          <SearchBox />
+        </div>
 
         <div className="absolute left-1/2 transform -translate-x-1/2 ">
           <Link href="/">
