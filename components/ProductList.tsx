@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import ProductCard from "./ProductCard";
 import Loading from "@/app/loading";
+import { findPricedVariant } from "@/lib/price";
 
 export default function ProductList({ data }: { data: any }) {
   if (!data || data.length === 0) {
@@ -26,7 +27,13 @@ export default function ProductList({ data }: { data: any }) {
           // ))
 
           //!!!!!! отображает только первый вариант товара в списке продуктов
-          <ProductCard key={item.id} data={item} variant={item.variants[0]} />
+          // Показываем вариант с ценой: у первого её может не быть, если
+          // товар опубликовали до того, как проставили цены.
+          <ProductCard
+            key={item.id}
+            data={item}
+            variant={findPricedVariant(item) ?? item.variants?.[0]}
+          />
         ))}
       </div>
     </Suspense>

@@ -3,20 +3,32 @@
 import { useEffect, useState } from "react";
 import ImageSlider from "./ImageSlider";
 import ProductButtons from "./ProductButtons";
+import { findPricedVariant, readPrice } from "@/lib/price";
 
 export default function ProductVariationsSection({
   product,
 }: {
   product: any;
 }) {
+  const variants = Array.isArray(product?.variants) ? product.variants : [];
+
+  // Открываем товар на варианте, который можно купить: если у первого
+  // варианта цены нет, а у второго есть, покупатель не должен упираться
+  // в «цена уточняется» на ровном месте.
   const [selectedVariant, setSelectedVariant] = useState<any>(
-    product.variants[0]
+    findPricedVariant(product) ?? variants[0] ?? null
   );
+
+  const price = readPrice(selectedVariant);
+
+  if (!selectedVariant) {
+    return null;
+  }
 
   return (
     <section className="flex flex-row bg-white w-[95%] shadow-xl rounded-md z-10 py-16 flex-wrap gap-10 justify-center ">
       <div className="mdx:w-[40%] relative px-3 w-full">
-        {product.variants[0].calculated_price.is_calculated_price_price_list ? (
+        {price?.isSale ? (
           <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
             <p className="whitespace-nowrap animate-marquee w-[150px] ">
               Распродажа
@@ -43,7 +55,7 @@ export default function ProductVariationsSection({
               Вариация:
             </h3>
             <div className="flex gap-2 flex-wrap ">
-              {product.variants.map((variant: any, index: string) => (
+              {variants.map((variant: any, index: string) => (
                 <div
                   key={index}
                   onClick={() => setSelectedVariant(variant)}
@@ -55,7 +67,7 @@ export default function ProductVariationsSection({
                 >
                   <p className="pr-1">{variant.title}. </p>
                   <p>
-                    {variant.options.map((option: any) => (
+                    {(variant.options ?? []).map((option: any) => (
                       <span key={option.id}>
                         {option.option.title + ": " + option.value + ". "}
                       </span>
@@ -67,7 +79,7 @@ export default function ProductVariationsSection({
           </div>
         </div>
         <div className="w-full flex space-x-2">
-          {product.tags.map((tag: any, index: number) => (
+          {(product.tags ?? []).map((tag: any, index: number) => (
             <div
               key={index}
               className={` border-[2px] px-3 py-2 h-10 rounded-md flex justify-center items-center text-calcsm  font-semibold text-gray-600  transition-all duration-300  `}
@@ -77,17 +89,21 @@ export default function ProductVariationsSection({
           ))}
         </div>
         <div className="w-full">
-          {selectedVariant.calculated_price.is_calculated_price_price_list ? (
+          {!price ? (
+            <p className="text-2xl font-bold text-nowrap text-gray-500 mb-5">
+              Цена уточняется
+            </p>
+          ) : price.isSale ? (
             <>
               <p className="text-xl line-through font-bold text-nowrap text-green-900 mb-5">
-                Цена: {selectedVariant.calculated_price.original_amount}
+                Цена: {price.original}
                 &#8380;
               </p>
 
               <div className="text-2xl flex flex-row flex-nowrap gap-2  font-bold text-nowrap text-red-700 mb-5">
                 <p>Скидочная цена: </p>
                 <p className="animate-bounce text-3xl">
-                  {selectedVariant.calculated_price.calculated_amount}
+                  {price.calculated}
                   &#8380;
                 </p>
               </div>
@@ -96,13 +112,14 @@ export default function ProductVariationsSection({
             <>
               <p className="text-3xl font-bold text-nowrap text-green-900 mb-5">
                 <span>Цена: </span>
-                {selectedVariant.calculated_price.original_amount}
+                {price.original}
                 &#8380;
               </p>
             </>
           )}
 
-          <ProductButtons id={selectedVariant.id} />
+          {/* Без цены корзина вариант не примет — кнопки прячем. */}
+          {price ? <ProductButtons id={selectedVariant.id} /> : null}
         </div>
       </div>
     </section>

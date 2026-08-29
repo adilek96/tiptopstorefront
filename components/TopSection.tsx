@@ -17,7 +17,7 @@ export default async function TopSection() {
         <Suspense fallback={<Loading />}>
           <div className="w-full    flex flex-wrap justify-center gap-10">
             {products.data.map((item: any, i: number) =>
-              item.variants.map((variant: any) => (
+              (item.variants ?? []).map((variant: any) => (
                 <div key={variant.id} className="relative w-[360px] max-w-sm">
                   <ProductCard data={item} variant={variant} />
                   <div className="top-10 right-10 absolute">

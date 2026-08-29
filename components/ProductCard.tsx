@@ -7,6 +7,7 @@ import { ShoppingCart, Pointer, Check } from "lucide-react";
 import { useCart } from "@/providers/CartProvider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { readPrice } from "@/lib/price";
 
 export default function ProductCard({
   data,
@@ -20,15 +21,24 @@ export default function ProductCard({
   const { addItem, addSingleItem, cart } = useCart();
   const router = useRouter();
 
+  // Цена может отсутствовать: товар опубликовали, а цену в регионе не
+  // проставили. Тогда карточку показываем, но купить не даём — корзина
+  // такой вариант всё равно не примет.
+  const price = readPrice(variant);
+
   useEffect(() => {
     if (cart) {
       cart.cart.items.map((item: any) => {
-        if (item.variant_id === variant.id) {
+        if (item.variant_id === variant?.id) {
           setIsInCart(true);
         }
       });
     }
-  }, [cart]);
+  }, [cart, variant?.id]);
+
+  if (!variant) {
+    return null;
+  }
 
   const singleHandler = async (id: string) => {
     try {
@@ -65,26 +75,37 @@ export default function ProductCard({
             <p className="text-sm text-gray-600 h-14 mb-4">{data.subtitle}</p>
             <p className="text-[12px] text-gray-600 mb-4">{variant.title}</p>
             <div className="flex items-center justify-start gap-3 mb-4">
-              {variant.calculated_price.is_calculated_price_price_list ? (
+              {!price ? (
+                <span className="text-xl font-bold text-gray-500">
+                  Цена уточняется
+                </span>
+              ) : price.isSale ? (
                 <>
                   <span className="text-xl line-through font-bold text-green-900">
-                    {variant.calculated_price.original_amount} &#8380;
+                    {price.original} &#8380;
                   </span>
                   <span className="text-3xl font-bold text-red-700 animate-bounce">
-                    {variant.calculated_price.calculated_amount} &#8380;
+                    {price.calculated} &#8380;
                   </span>
                 </>
               ) : (
                 <>
                   <span className="text-3xl font-bold text-green-900">
-                    {variant.calculated_price.original_amount} &#8380;
+                    {price.original} &#8380;
                   </span>
                 </>
               )}
             </div>
           </Link>
           <div className="flex space-x-2">
-            {isInCart ? (
+            {!price ? (
+              <Button
+                disabled
+                className="flex-1 h-12 bg-gray-300 text-calclg text-gray-600"
+              >
+                Пока не продаётся
+              </Button>
+            ) : isInCart ? (
               <Button
                 onClick={() => router.push("/cart")}
                 className="flex-1 h-12 bg-green-500 hover:bg-green-600 text-calclg text-white "
@@ -102,16 +123,18 @@ export default function ProductCard({
               </Button>
             )}
 
-            <Button
-              onClick={() => singleHandler(variant.id)}
-              className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white transition-all duration-300"
-            >
-              <Pointer className="h-4 w-4" />
-            </Button>
+            {price ? (
+              <Button
+                onClick={() => singleHandler(variant.id)}
+                className="bg-amber-600 h-12 hover:bg-amber-700 border-amber-700 text-white transition-all duration-300"
+              >
+                <Pointer className="h-4 w-4" />
+              </Button>
+            ) : null}
           </div>
         </CardContent>
       </Card>
-      {variant.calculated_price.is_calculated_price_price_list ? (
+      {price?.isSale ? (
         // вариант с анимацией
         // <div className="ribbon-sale text-calcxl    bg-red-500  z-50 ">
         //   <p className="whitespace-nowrap animate-marquee w-[150px] ">
