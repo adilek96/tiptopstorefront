@@ -1,3 +1,7 @@
+// Данные тянутся из Medusa на каждый запрос — пререндер на этапе сборки
+// потребовал бы живого бэкенда во время docker build.
+export const dynamic = "force-dynamic";
+
 import Banner from "@/components/Banner";
 import CarouselJs from "@/components/CarouselJs";
 import Delivery from "@/components/Delivery";

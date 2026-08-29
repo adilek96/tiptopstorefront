@@ -1,5 +1,5 @@
 'use server'
-import { getMedusaURL } from "@/lib/utils";
+import { getMedusaURL, getRegionId } from "@/lib/utils";
 import { getCategoriesId } from "./getCategories";
 
 
@@ -13,7 +13,7 @@ export async function getProducts(slug : string, sortParam?: string) {
   console.log("🔍 getProducts called with:", { slug, sortParam, finalSortOption: sortOption });
 
   const categoryId = await getCategoriesId(slug)
-  const regionid = "reg_01JCJKAS5JFH0706TQKGJDRPEZ";
+  const regionid = getRegionId();
   const baseUrl = getMedusaURL();
   const url = new URL(`/store/products?region_id=${regionid}&category_id=${categoryId}`, baseUrl);
   const key = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY;

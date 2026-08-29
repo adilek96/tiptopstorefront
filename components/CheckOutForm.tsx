@@ -1,4 +1,4 @@
-"use state";
+"use client";
 
 import { Suspense, useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Confirm } from "./Confirm";
 import Loading from "@/app/loading";
+import { shippingOptionIds } from "@/lib/utils";
 
 interface CheckOutFormProps {
   addShippingMethodToCart: (
@@ -147,7 +148,7 @@ export default function CheckOutForm({
     let requestData = {};
 
     if (deliveryType === "metro") {
-      deliveryId = "so_01JCKDR1NYHC7BEC8P104PBH7Z";
+      deliveryId = shippingOptionIds.metro;
       requestData = {
         consumerName,
         consumerLastName,
@@ -157,7 +158,7 @@ export default function CheckOutForm({
         deliveryTime,
       };
     } else if (deliveryType === "city") {
-      deliveryId = "so_01JCKDSGCDMWBBZQWQ2VQ7NNY2";
+      deliveryId = shippingOptionIds.city;
       requestData = {
         consumerName,
         consumerLastName,
@@ -167,7 +168,7 @@ export default function CheckOutForm({
         deliveryTime,
       };
     } else if (deliveryType === "country") {
-      deliveryId = "so_01JCKDY5CCK7FZ47AXVY1GQ7AF";
+      deliveryId = shippingOptionIds.country;
       requestData = {
         consumerName,
         consumerLastName,
@@ -282,18 +283,15 @@ export default function CheckOutForm({
           className="flex flex-col space-y-2 mt-2"
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="metro" id="so_01JCKDR1NYHC7BEC8P104PBH7Z" />
+            <RadioGroupItem value="metro" id="metro" />
             <Label htmlFor="metro">Доставка по линии метро</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="city" id="so_01JCKDSGCDMWBBZQWQ2VQ7NNY2" />
+            <RadioGroupItem value="city" id="city" />
             <Label htmlFor="city">Доставка до адреса в черте города</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="country"
-              id="so_01JCKDY5CCK7FZ47AXVY1GQ7AF"
-            />
+            <RadioGroupItem value="country" id="country" />
             <Label htmlFor="country">
               Доставка по всей стране курьерскими службами
             </Label>

@@ -1,9 +1,9 @@
 'use server'
-import { getMedusaURL } from "@/lib/utils";
+import { getMedusaURL, getRegionId } from "@/lib/utils";
 
 export async function getProduct(slug : string) {
 
-  const regionid = "reg_01JCJKAS5JFH0706TQKGJDRPEZ";
+  const regionid = getRegionId();
   const baseUrl = getMedusaURL();
   const url = new URL(`/store/products/${slug}?region_id=${regionid}`, baseUrl);
   const key = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY;

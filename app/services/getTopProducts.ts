@@ -1,14 +1,20 @@
 'use server'
-import { getMedusaURL } from "@/lib/utils";
+import { getMedusaURL, getRegionId, getTopProductsTagId } from "@/lib/utils";
 
 
 
 export async function getTopProducts() {
 
-  const tag = "ptag_01JCNY03CBK36AQWD09G3J9QHF"
-  const regionid = "reg_01JCJKAS5JFH0706TQKGJDRPEZ";
+  const tag = getTopProductsTagId();
+  const regionid = getRegionId();
   const baseUrl = getMedusaURL();
-  const url = new URL(`/store/products?region_id=${regionid}&tag_id=${tag}`, baseUrl);
+  const params = new URLSearchParams({ region_id: regionid });
+  // Тег «Топ товаров» задаётся вручную в админке. Пока он не проставлен —
+  // отдаём просто последние товары, а не пустой список.
+  if (tag) {
+    params.set("tag_id", tag);
+  }
+  const url = new URL(`/store/products?${params.toString()}`, baseUrl);
   const key = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY;
  
 

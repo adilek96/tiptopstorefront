@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache";
 export async function addItemsToCart(variants:string, quantity:number, cartid: string) {
 
 
-//   const regionid = "reg_01JCJKAS5JFH0706TQKGJDRPEZ";
   const baseUrl = getMedusaURL();
   const url = new URL(`/store/carts/${cartid}/line-items`, baseUrl);
   const key = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY;

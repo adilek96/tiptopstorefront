@@ -1,3 +1,7 @@
+// Данные тянутся из Medusa на каждый запрос — пререндер на этапе сборки
+// потребовал бы живого бэкенда во время docker build.
+export const dynamic = "force-dynamic";
+
 import { getProduct } from "@/app/services/getProduct";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import ImageSlider from "@/components/ImageSlider";
