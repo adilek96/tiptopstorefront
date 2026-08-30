@@ -21,6 +21,23 @@ export default function ProductVariationsSection({
 
   const price = readPrice(selectedVariant);
 
+  // Картинки вариации кладёт плагин medusa-variant-images — в metadata самой
+  // вариации, отдельного поля под них в модели Medusa нет. Если у вариации
+  // своих фото не задано, показываем общие фото товара.
+  const variantMedia = (selectedVariant?.metadata ?? {}) as {
+    thumbnail?: string;
+    images?: { url: string }[];
+  };
+  const variantImages = Array.isArray(variantMedia.images)
+    ? variantMedia.images.filter((image) => image?.url)
+    : [];
+
+  const media = {
+    thumbnail:
+      variantMedia.thumbnail || variantImages[0]?.url || product.thumbnail,
+    images: variantImages.length ? variantImages : product.images,
+  };
+
   if (!selectedVariant) {
     return null;
   }
@@ -39,7 +56,7 @@ export default function ProductVariationsSection({
           <></>
         )}
 
-        <ImageSlider images={product.images} thumbnail={product.thumbnail} />
+        <ImageSlider images={media.images} thumbnail={media.thumbnail} />
       </div>
       <div className="mdx:w-[40%] w-full px-10 mdx:px-1 flex flex-col justify-between gap-10 items-center md:py-14">
         <div className="w-full">

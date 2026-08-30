@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 
@@ -11,7 +11,13 @@ export default function ImageSlider({
   thumbnail: string;
 }) {
   const [mainImage, setMainImage] = useState(thumbnail);
-  console.log(mainImage);
+
+  // Набор картинок меняется при выборе другой вариации товара. Без сброса
+  // в слайдере осталась бы висеть фотография предыдущего цвета.
+  useEffect(() => {
+    setMainImage(thumbnail);
+  }, [thumbnail]);
+
   return (
     <div className="space-y-4 min-w-[360px]  px-4 sm:px-0">
       <div className="relative aspect-square border-[4px] rounded-lg border-amber-500">
