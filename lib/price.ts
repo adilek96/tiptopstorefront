@@ -9,7 +9,7 @@
  */
 
 export type VariantPrice = {
-  /** Цена по прайс-листу: значит, идёт распродажа и есть старая цена. */
+  /** Цена ниже обычной: показываем старую зачёркнутой и ленту «Распродажа». */
   isSale: boolean
   /** Цена до скидки — она же обычная цена, когда скидки нет. */
   original: number
@@ -48,10 +48,18 @@ export function readPrice(variant: any): VariantPrice | null {
     return null
   }
 
+  const before = original ?? (calculated as number)
+  const now = calculated ?? (original as number)
+
   return {
-    isSale: Boolean(price.is_calculated_price_price_list),
-    original: original ?? (calculated as number),
-    calculated: calculated ?? (original as number),
+    // Не по флагу прайс-листа: он лишь говорит, откуда взялась цена.
+    // Товар, у которого цену завели только в прайс-листе и не завели
+    // базовую, тоже приходит с этим флагом — и вся витрина оказывалась
+    // «в распродаже», причём старая цена совпадала с новой. Скидка есть
+    // только тогда, когда платить нужно меньше.
+    isSale: now < before,
+    original: before,
+    calculated: now,
   }
 }
 
